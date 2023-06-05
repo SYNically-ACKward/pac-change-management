@@ -1,4 +1,4 @@
-name: PAC File Testing
+name: PAC File Tests
 
 on:
   push:
@@ -10,11 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v2
+      
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
 
       - name: Install dependencies
-        run: npm install # Replace with appropriate command to install dependencies
-
+        run: pip install selenium
+      
       - name: Run PAC file tests
-        run: npm run test # Replace with appropriate command to run tests
+        run: python .github/workflows/pac-file-tests.py
