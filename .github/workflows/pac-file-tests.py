@@ -1,67 +1,31 @@
+import time
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
-def run_tests():
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    driver = webdriver.Chrome(options=chrome_options)
+# Function to perform PAC file tests
+def run_pac_file_tests():
+    # Configure Selenium WebDriver
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')  # Run Chrome in headless mode
+    driver = webdriver.Chrome(options=options)
     
-    # Syntax Check
-    syntax_check(driver)
-    
-    # Logic Validation
-    logic_validation(driver)
-    
-    # Proxy Reachability
-    proxy_reachability(driver)
-    
-    # Proxy Selection
-    proxy_selection(driver)
-    
-    # Performance Evaluation
-    performance_evaluation(driver)
-    
-    # Rule Testing
-    rule_testing(driver)
-    
-    # Error Handling
-    error_handling(driver)
-    
-    driver.quit()
+    try:
+        # Load the PAC file URL
+        driver.get('https://github.com/SYNically-ACKward/pac-change-management/blob/ca64d61709032202d1c432d6814cb122531874dd/proxy.pac')
+        time.sleep(2)  # Wait for the PAC file to be applied
+        
+        # Test scenario 1: Verify specific website access
+        driver.get('https://www.synically-ackward.com')
+        assert 'SYN-ACK' in driver.title
+        
+        # Test scenario 2: Verify blocked website access
+        driver.get('https://www.blocked-site.com')
+        assert 'Access Denied' in driver.page_source
+        
+        # Add more test scenarios as needed
+        
+    finally:
+        # Quit the WebDriver
+        driver.quit()
 
-def syntax_check(driver):
-    # Perform syntax check tests
-    # ...
-    pass
-
-def logic_validation(driver):
-    # Perform logic validation tests
-    # ...
-    pass
-
-def proxy_reachability(driver):
-    # Perform proxy reachability tests
-    # ...
-    pass
-
-def proxy_selection(driver):
-    # Perform proxy selection tests
-    # ...
-    pass
-
-def performance_evaluation(driver):
-    # Perform performance evaluation tests
-    # ...
-    pass
-
-def rule_testing(driver):
-    # Perform rule testing tests
-    # ...
-    pass
-
-def error_handling(driver):
-    # Perform error handling tests
-    # ...
-    pass
-
-run_tests()
+# Run the PAC file tests
+run_pac_file_tests()
