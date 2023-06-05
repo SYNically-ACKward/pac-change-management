@@ -15,7 +15,7 @@ def run_pac_file_tests():
         
         # Test scenario 1: Verify specific website access
         driver.get('https://www.synically-ackward.com')
-        assert 'SYN-ACK' in driver.title
+        assert 'SYNically-ACKward' in driver.title
         
         # Test scenario 2: Verify blocked website access
         driver.get('https://www.blocked-site.com')
